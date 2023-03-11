@@ -3,7 +3,7 @@ const { addCategory, deleteCategory, getAllCategories, editCategory, imageUpload
 const protect = require('../middleware/authMiddleware');
 const router = express.Router()
 
-router.route('/addCategory').post(protect, addCategory);
+router.route('/addCategory').post(addCategory);
 router.route('/deleteCategory/:catId').delete(protect, deleteCategory);
 router.route('/getAllCat').get(getAllCategories);
 router.route('/editCategory/:catId').put(editCategory);

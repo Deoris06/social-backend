@@ -1,8 +1,18 @@
 const mongoose = require('mongoose');
 
 const categorySchema = new mongoose.Schema({
-    category_name: {
+    name: {
         type: String
+    },
+    icon: {
+        type: String
+    },
+    backgroundColor: {
+        type: String
+    },
+    color:{
+        type: String,
+        default: "white"
     },
     createdAt: {
         type: Date,

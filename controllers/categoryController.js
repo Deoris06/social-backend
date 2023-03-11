@@ -7,8 +7,8 @@ const imageToBase64 = require('image-to-base64');
 // @route   POST /api/news/addNews
 // @access  Private
 const addCategory = asyncHandler(async (req, res) => {
-    const { category_name } = req.body
-    const category = await Category.findOne({ category_name: category_name });
+    const { name, icon, backgroundColor } = req.body
+    const category = await Category.findOne({ name: name });
 
     if (category) {
         return res.status(401).json({
@@ -17,7 +17,7 @@ const addCategory = asyncHandler(async (req, res) => {
         })
     }
 
-    const new_cat = await Category.create({ category_name });
+    const new_cat = await Category.create({ name, icon, backgroundColor });
 
     res.status(201).json({
         success: true,
