@@ -1,13 +1,13 @@
 const express = require('express');
-const { listing } = require('../controllers/listingController');
+const { listings, getAllList } = require('../controllers/listingController');
 const protect = require('../middleware/authMiddleware');
 const router = express.Router()
 
-router.route('/addCategory').post(addCategory);
-router.route('/deleteCategory/:catId').delete(protect, deleteCategory);
-router.route('/getAllCat').get(getAllCategories);
-router.route('/editCategory/:catId').put(editCategory);
-router.route('/post/image/fb').post(imageUpload)
+router.route('/addListings').post(listings);
+// router.route('/deleteCategory/:catId').delete(protect, deleteCategory);
+router.route('/getAllList').get(getAllList);
+// router.route('/editCategory/:catId').put(editCategory);
+// router.route('/post/image/fb').post(imageUpload)
 
 
 

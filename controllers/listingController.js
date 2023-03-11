@@ -1,5 +1,6 @@
 const asyncHandler = require('express-async-handler')
 const Listing = require('../models/listingModel.js')
+const Cloudinary = require('cloudinary');
 // const imageToBase64 = require('image-to-base64');
 
 
@@ -149,8 +150,11 @@ const imageUpload = asyncHandler(async (req, res) => {
 }
 )
 
-
+const getAllList = asyncHandler(async(req, res) => {
+    
+})
 
 module.exports = {
-    listings
+    listings,
+    getAllList
 }

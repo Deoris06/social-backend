@@ -9,7 +9,7 @@ if (process.env.NODE_ENV !== 'PRODUCTION') require('dotenv').config({ path: './c
 const userRoutes = require('./routes/userRoutes.js');
 const newsRoutes = require('./routes/newsRoute.js');
 const categoryRoutes = require('./routes/categoryRoute');
-
+const listRoutes = require('./routes/listingRoute')
 
 const morgan = require('morgan');
 
@@ -35,6 +35,7 @@ app.use(express.urlencoded({extended: false}));
 app.use('/api/users', userRoutes);
 app.use('/api/news', newsRoutes);
 app.use('/api/category', categoryRoutes);
+app.use('/api/list', listRoutes);
 
 app.get('*', function(req, res){
   res.status(404).json({
