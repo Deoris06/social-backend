@@ -18,14 +18,14 @@ const {
 
 const protect = require('../middleware/authMiddleware.js')
 
-router.route('/').post(registerUser).get(protect, getUsers)
+router.route('/register').post(registerUser).get(registerUser)
 router.route('/login').post(authUser)
 router
   .route('/profile')
-  .get(protect, getUserProfile)
-  .put(protect, updateUserProfile)
+  .get(getUserProfile)
+  .put(updateUserProfile)
 router
-  .route('/:id')
+  .route('/profile/:id')
 //   .delete(protect, deleteUser)
   .get(getUserById)
 //   .put(protect, updateUser)

@@ -32,18 +32,10 @@ const ListingSchema = new mongoose.Schema({
             }
     }
     ],
-    location: [
-        {
-            latitude: {
-                type: Number,
-                required: false
-            },
-            longitude: {
-                type: Number,
-                required: false
-            },
-        }
-    ],
+    location: {
+        type: Object,
+        required: false
+    },
     userId: {
         type: mongoose.Schema.ObjectId,
         ref: 'User',

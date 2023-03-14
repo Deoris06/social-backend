@@ -1,56 +1,46 @@
 const asyncHandler = require('express-async-handler')
 const Listing = require('../models/listingModel.js')
-const Cloudinary = require('cloudinary');
-// const imageToBase64 = require('image-to-base64');
+const cloudinary = require('cloudinary');
+
+const ErrorHandler = require('../utils/errorHandler');
+const catchAsyncErrors = require('../middleware/catchAsyncErrors');
+const imageToBase64 = require('image-to-base64');
 
 
 // @desc    Add News
 // @route   POST /api/news/addNews
 // @access  Private
 
-const listings = asyncHandler(async ( req, res) => {
-    // Collect image from student
+
+const listings = catchAsyncErrors(async (req, res, next) => {
+    console.log(req.body)
+   
     let images = []
-    // let location = []
     if(typeof req.body.images === 'string'){
         images.push(req.body.images)
     }else{
         images = req.body.images
     }
     let imageLink = [];
-    let errMessage;
     console.log(images)
-    if( typeof images !== "undefined" && images.length > 0){
-        for(let i = 0; i < images.length; i++){
-            const result = await Cloudinary.v2.uploader.upload(images[i], {
-                folder: 'listings/list'
-            });
-
-            imageLink.push({
-                public_id: result.public_id,
-                url: result.secure_url
-            })
-        }
-    }else{
-        
-        errMessage  = `Please select an image file`
+    for(let i = 0; i < images.length; i++){
+        const result = await cloudinary.v2.uploader.upload(images[i], {
+            folder: 'risha/admin'
+        });
+        console.log(result, 'kio')
+        imageLink.push({
+            public_id: result.public_id,
+            url: result.secure_url
+        })
     }
-    // location.push({
-    //     latitude: ,
-    //     longitude: 
-    // })
-    // console.log(imageLink.length, 'me')
-    // if(imageLink.length === 0){
-    //     return next(new ErrorHandler('Please select an image', 500))
-    // }
+    console.log(imageLink)
     req.body.images = imageLink
-    const list = await Listing.create(req.body);
-    
-    res.status(201).json({
+    console.log(req.body.images)
+    const list = await Listing.create(req.body)
+    console.log(list)
+    res.status(200).json({
         success: true,
-        message: `${list.name} has been added to list record!`,
-        list,
-    
+        list
     })
 })
 const addCategory = asyncHandler(async (req, res) => {
@@ -151,7 +141,13 @@ const imageUpload = asyncHandler(async (req, res) => {
 )
 
 const getAllList = asyncHandler(async(req, res) => {
-    
+    let populateQuery = [{path:'category', select:'name'}, {path:'userId', select:'name'}];
+    const lists = await Listing.find().populate(populateQuery);
+
+    res.status(200).json({
+        success: true,
+        lists
+    })
 })
 
 module.exports = {
